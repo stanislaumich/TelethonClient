@@ -10,6 +10,7 @@ from telethon import TelegramClient, events
 from telethon.errors import SessionPasswordNeededError
 from telethon.network import ConnectionTcpAbridged
 from telethon.utils import get_display_name
+from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 
 # Create a global variable to hold the loop we will be using
 loop = asyncio.get_event_loop()
@@ -434,7 +435,7 @@ class InteractiveTelegramClient(TelegramClient):
                 conn.execute('''INSERT INTO mess (u_from, u_to, mess,chat, idm) VALUES (?,?,?,?,?)''',
                 (get_display_name(await event.get_sender()),'to all', event.text, get_display_name(chat),event.id))
                 conn.commit()
-                
+               
         else:
             if event.out:
                 sprint('>-> "{}" to user {}'.format(
@@ -444,13 +445,16 @@ class InteractiveTelegramClient(TelegramClient):
                 ('me',get_display_name(chat), event.text, get_display_name(chat),event.id))
                 conn.commit()
             else:
-                # от человека?
-                sprint('<-< {} sent >>>> "{}"'.format(
-                get_display_name(chat), event.text
-                ))
+                if event.text[0] == '=':
+                    ss1 = event.text.split('=')[1]
+                    ss2 = event.text.split('=')[2]
+                    sprint('2bot to bot "{}" 888888888  {}'.format(ss1, ss2))
+                    await self.send_message(ss1, ss2, link_preview=False)
+                sprint('<-< {} sent >>>> "{}"'.format(get_display_name(chat), event.text))
                 conn.execute('''INSERT INTO mess (u_from, u_to, mess,chat, idm) VALUES (?,?,?,?,?)''',
                 (get_display_name(chat),'me', event.text, get_display_name(chat),event.id))
                 conn.commit()
+
 
 
 if __name__ == '__main__':
