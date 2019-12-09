@@ -449,7 +449,7 @@ class InteractiveTelegramClient(TelegramClient):
                     ss1 = event.text.split('=')[1]
                     ss2 = event.text.split('=')[2]
                     ss3 = event.text.split('=')[3]
-                    mesb = "="+ss2+"="+ss3
+                    mesb = "="+ss2+"="+ss1+"="+ss3
                     #sprint('\n+++> bot for bot "{}" >>  {}'.format(ss1, mesb))
                     await self.send_message(ss1, mesb, link_preview=False)
                     sprint('+++> redirect for "{}" mess <{}>'.format(ss1, mesb))
