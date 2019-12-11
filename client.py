@@ -449,9 +449,10 @@ class InteractiveTelegramClient(TelegramClient):
                     ss1 = event.text.split('=')[1]
                     ss2 = event.text.split('=')[2]
                     ss3 = event.text.split('=')[3]
-                    mesb = "="+ss2+"="+ss1+"="+ss3
+                    mesb = "="+ss1+"="+ss2+"="+ss3
                     #sprint('\n+++> bot for bot "{}" >>  {}'.format(ss1, mesb))
-                    await self.send_message(ss1, mesb, link_preview=False)
+                    if ss1 !='Lz428266YE':
+                        await self.send_message(ss1, mesb, link_preview=False)
                     sprint('+++> redirect for "{}" mess <{}>'.format(ss1, mesb))
                 sprint('<-< {} sent >>>> "{}"'.format(get_display_name(chat), event.text))
                 conn.execute('''INSERT INTO mess (u_from, u_to, mess,chat, idm) VALUES (?,?,?,?,?)''',
